@@ -100,7 +100,11 @@ public class ContextV1Test {
         context2.execute();
     }
 
-    // 람다
+    /**
+     * 람다
+     * 인터페이스의 메서드가 1개일때만 가능
+     */
+
     @Test
     void strategyV4() {
         ContextV1 context1 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
