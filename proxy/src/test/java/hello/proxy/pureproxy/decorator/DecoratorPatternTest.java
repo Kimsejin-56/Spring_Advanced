@@ -1,6 +1,7 @@
-package hello.proxy.decorator;
+package hello.proxy.pureproxy.decorator;
 
-import hello.proxy.decorator.code.*;
+import hello.proxy.pureproxy.decorator.code.*;
+import hello.proxy.pureproxy.decorator.code.*;
 import org.junit.jupiter.api.Test;
 
 public class DecoratorPatternTest {
