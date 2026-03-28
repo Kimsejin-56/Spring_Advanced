@@ -11,6 +11,7 @@ import org.springframework.aop.MethodMatcher;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Method;
 
@@ -42,6 +43,29 @@ public class AdvisorTest {
         ProxyFactory proxyFactory = new ProxyFactory(target);
         //프록시 팩토리 사용할 때 어드바이저 필수!!
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(new MyPointCut(), new TimeAdvice());
+        proxyFactory.addAdvisor(advisor);
+        ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+
+        proxy.save();
+        proxy.find();
+    }
+
+    /**
+     * - NameMatchMethodPointcut : 메서드 이름을 기반으로 매칭한다. 내부에서는 PatternMatchUtils를 사용
+     *   예) *xxx* 허용
+     * - JdkRegexpMethodPointcut : JDK 정규 표현식을 기반으로 포인트컷을 매칭
+     * - TruePointcut : 항상 참을 반환
+     * - AnnotationMatchingPointcut : 애노테이션으로 매칭
+     * - AspectJExpressionPointcut : aspectJ 표현식으로 매칭(실무에서 가장 많이 사용하는 포인트컷 중요!)
+     */
+    @Test
+    @DisplayName("스프링이 제공하는 포인트컷")
+    void advisorTest3() {
+        ServiceInterface target = new ServiceImpl();
+        ProxyFactory proxyFactory = new ProxyFactory(target);
+        NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+        pointcut.setMappedName("save");
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(pointcut, new TimeAdvice());
         proxyFactory.addAdvisor(advisor);
         ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
 
