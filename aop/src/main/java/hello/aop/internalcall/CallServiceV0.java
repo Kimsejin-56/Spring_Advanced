@@ -10,7 +10,7 @@ public class CallServiceV0 {
 
     public void external() {
         log.info("call external");
-        internal();
+        internal(); //내부 메서드 호출(프록시 적용 X)
     }
 
     public void internal() {
